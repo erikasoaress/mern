@@ -31,6 +31,8 @@ mongoose
     console.log(`Server running at ${url}`)
 })
 
-server.listen({ port: 5000 }).then(({ url }) => {
+server
+.listen({ port: 5000 })
+.then(({ url }) => {
   console.log(`Server running at ${url}`);
 });
