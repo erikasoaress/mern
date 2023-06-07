@@ -2,35 +2,9 @@ const {ApolloServer} = require("apollo-server");
 const gql = require("graphql-tag");
 const mongoose = require("mongoose");
 
-const Post = require("./Models/Post");
+const typeDefs = require("./graphql/typeDefs");
+const resolvers = require("./graphql/resolvers")
 const {MONGODB} = require("./config");
-
-const typeDefs = gql`
-type Post {
-  id: ID!
-  body: String!
-  createdAt: String!
-  username: String!
-  
-}
-  type Query {
-    getPosts:[Post]
-  }
-`;
-
-const resolvers = {
-  Query: {
-   async getPosts(){
-    try {
-      const posts = await Post.find();
-      console.log(posts)
-      return posts;
-    } catch(err) {
-      throw new Error("Failed to fetch posts");
-    }
-   }
-  },
-};
 
 const server = new ApolloServer({
   typeDefs,
@@ -39,7 +13,7 @@ const server = new ApolloServer({
 
 try {
   mongoose
-    .connect(MONGODB, { useNewUrlParser: true })
+    .connect(MONGODB)
     .then(() => {
       console.log("MongoDB connected!");
       return server.listen({ port: 5000 });
