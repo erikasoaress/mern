@@ -20,12 +20,13 @@ type Post {
 
 const resolvers = {
   Query: {
-   async getPosts() {
+   async getPosts(){
     try {
       const posts = await Post.find();
+      console.log(posts)
       return posts;
     } catch(err) {
-      throw new Error(err);
+      throw new Error("Failed to fetch posts");
     }
    }
   },
